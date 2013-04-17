@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillTracker", "BillTracker\BillTracker.csproj", "{D166FA9E-5E7B-4425-B0C9-4DC7FAE4E748}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillTracker.Tests", "BillTracker.Tests\BillTracker.Tests.csproj", "{9C5466A3-5A19-45F5-85BF-7CD1871B98DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D166FA9E-5E7B-4425-B0C9-4DC7FAE4E748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D166FA9E-5E7B-4425-B0C9-4DC7FAE4E748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D166FA9E-5E7B-4425-B0C9-4DC7FAE4E748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D166FA9E-5E7B-4425-B0C9-4DC7FAE4E748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C5466A3-5A19-45F5-85BF-7CD1871B98DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C5466A3-5A19-45F5-85BF-7CD1871B98DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C5466A3-5A19-45F5-85BF-7CD1871B98DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C5466A3-5A19-45F5-85BF-7CD1871B98DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

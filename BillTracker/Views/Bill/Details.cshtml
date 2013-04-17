@@ -1,0 +1,51 @@
+﻿@model BillTracker.Models.BillModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>BillModel</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Vendor)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Vendor)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.StartFrom)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StartFrom)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.End)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.End)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DueAmount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DueAmount)
+    </div>
+    
+@**@
+@*    <div class="display-label">*@
+@*         @Html.DisplayNameFor(model => model.UserId)*@
+@*    </div>*@
+@*    <div class="display-field">*@
+@*        @Html.DisplayFor(model => model.UserId)*@
+@*    </div>*@
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
