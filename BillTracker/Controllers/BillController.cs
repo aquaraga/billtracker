@@ -1,24 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using BillTracker.Models;
+using BillTracker.ViewModels;
+using BillTracker.ViewModels.Mapper;
 
 namespace BillTracker.Controllers
 {
+    public class BillService : IBillService
+    {
+        public void SaveBill(BillModel billModel)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+
+    public interface IBillService
+    {
+        void SaveBill(BillModel billModel);
+    }
+
     public class BillController : Controller
     {
-        private readonly BillContext db = new BillContext();
+        private readonly IBillModelMapper billModelMapper;
+        private readonly IBillService billService;
+
+
+        private readonly BillContext billContext = new BillContext();
+
+        public BillController(IBillModelMapper billModelMapper, IBillService billService)
+        {
+            this.billModelMapper = billModelMapper;
+            this.billService = billService;
+        }
 
         //
         // GET: /Bill/
 
         public ActionResult Index()
         {
-            return View(db.Bills.ToList());
+            return View(billContext.Bills.ToList());
         }
 
         //
@@ -26,7 +47,7 @@ namespace BillTracker.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            BillModel billmodel = db.Bills.Find(id);
+            BillModel billmodel = billContext.Bills.Find(id);
             if (billmodel == null)
             {
                 return HttpNotFound();
@@ -46,16 +67,19 @@ namespace BillTracker.Controllers
         // POST: /Bill/Create
 
         [HttpPost]
-        public ActionResult Create(BillModel billmodel)
+        public ActionResult Create(BillViewModel billViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Bills.Add(billmodel);
-                db.SaveChanges();
+                var billModel = billModelMapper.Map(billViewModel);
+                billService.SaveBill(billModel);
                 return RedirectToAction("Index");
+//                billContext.Bills.Add(new BillModel());
+//                billContext.SaveChanges();
+//                return RedirectToAction("Index");
             }
 
-            return View(billmodel);
+            return View("");
         }
 
         //
@@ -63,7 +87,7 @@ namespace BillTracker.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            BillModel billmodel = db.Bills.Find(id);
+            BillModel billmodel = billContext.Bills.Find(id);
             if (billmodel == null)
             {
                 return HttpNotFound();
@@ -79,8 +103,8 @@ namespace BillTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(billmodel).State = EntityState.Modified;
-                db.SaveChanges();
+                billContext.Entry(billmodel).State = EntityState.Modified;
+                billContext.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(billmodel);
@@ -91,7 +115,7 @@ namespace BillTracker.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            BillModel billmodel = db.Bills.Find(id);
+            BillModel billmodel = billContext.Bills.Find(id);
             if (billmodel == null)
             {
                 return HttpNotFound();
@@ -105,15 +129,15 @@ namespace BillTracker.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            BillModel billmodel = db.Bills.Find(id);
-            db.Bills.Remove(billmodel);
-            db.SaveChanges();
+            BillModel billmodel = billContext.Bills.Find(id);
+            billContext.Bills.Remove(billmodel);
+            billContext.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            billContext.Dispose();
             base.Dispose(disposing);
         }
     }
