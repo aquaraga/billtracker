@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 
 namespace BillTracker.Models
 {
@@ -11,7 +10,7 @@ namespace BillTracker.Models
 
         public DateTime StartFrom { get; set; }
 
-        public Frequency Frequency { get; set; }
+        public Repeat Repeat { get; set; }
 
         public DateTime End { get; set; }
 
@@ -23,9 +22,12 @@ namespace BillTracker.Models
 
     }
 
-    public class BillContext : DbContext
+    public class Repeat
     {
-        public DbSet<BillModel> Bills { get; set; }
+        public int RecurrenceNumber { get; set; }
+
+        public string RecurrenceUnit { get; set; }
+        
     }
 
     public class ExpenseType
@@ -36,11 +38,5 @@ namespace BillTracker.Models
     }
 
 
-    public enum Frequency
-    {
-        Monthly,
-        Annual,
-        BiAnnual,
-        Quarterly
-    }
+    
 }

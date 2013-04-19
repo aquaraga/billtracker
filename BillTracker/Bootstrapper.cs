@@ -1,4 +1,7 @@
 using System.Web.Mvc;
+using BillTracker.Models;
+using BillTracker.Services;
+using BillTracker.ViewModels.Mapper;
 using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 
@@ -23,6 +26,13 @@ namespace BillTracker
             // it is NOT necessary to register your controllers
 
             // e.g. container.RegisterType<ITestService, TestService>();    
+
+            container.RegisterType<IBillContext, BillContext>()
+                .RegisterType<IBillModelMapper, BillModelMapper>()
+                .RegisterType<IBillService, BillService>()
+                .RegisterType<IWebSecurityWrapper, WebSecurityWrapper>()
+                .RegisterType<IFrequencyMapper, FrequencyMapper>();
+
             RegisterTypes(container);
 
             return container;

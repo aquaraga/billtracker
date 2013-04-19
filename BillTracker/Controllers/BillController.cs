@@ -2,24 +2,12 @@
 using System.Linq;
 using System.Web.Mvc;
 using BillTracker.Models;
+using BillTracker.Services;
 using BillTracker.ViewModels;
 using BillTracker.ViewModels.Mapper;
 
 namespace BillTracker.Controllers
 {
-    public class BillService : IBillService
-    {
-        public void SaveBill(BillModel billModel)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
-
-    public interface IBillService
-    {
-        void SaveBill(BillModel billModel);
-    }
-
     public class BillController : Controller
     {
         private readonly IBillModelMapper billModelMapper;
@@ -71,12 +59,10 @@ namespace BillTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 var billModel = billModelMapper.Map(billViewModel);
                 billService.SaveBill(billModel);
                 return RedirectToAction("Index");
-//                billContext.Bills.Add(new BillModel());
-//                billContext.SaveChanges();
-//                return RedirectToAction("Index");
             }
 
             return View("");

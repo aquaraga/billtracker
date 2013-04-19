@@ -1,4 +1,4 @@
-﻿@model BillTracker.Models.BillModel
+﻿@model BillTracker.ViewModels.BillViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -34,6 +34,14 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.End)
             @Html.ValidationMessageFor(model => model.End)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Frequency)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Frequency)
+            @Html.ValidationMessageFor(model => model.Frequency)
         </div>
 
         <div class="editor-label">
