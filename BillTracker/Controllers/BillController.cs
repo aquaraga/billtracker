@@ -48,7 +48,7 @@ namespace BillTracker.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            return View(new BillViewModel());
         }
 
         //

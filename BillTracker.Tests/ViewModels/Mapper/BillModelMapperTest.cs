@@ -61,7 +61,7 @@ namespace BillTracker.Tests.ViewModels.Mapper
         [Test]
         public void ShouldInitiateFrequencyMapping()
         {
-            var repeat = new Repeat {RecurrenceNumber = 2, RecurrenceUnit = "Year"};
+            var repeat = new Repetition {RecurrenceNumber = 2, RecurrenceUnit = "Year"};
             frequencyMapper.Stub(f => f.Map(Frequency.BiAnnual)).Return(repeat);
             var billViewModel = new BillViewModel {Frequency = Frequency.BiAnnual};
 

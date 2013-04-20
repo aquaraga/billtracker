@@ -10,7 +10,7 @@ namespace BillTracker.Models
 
         public DateTime StartFrom { get; set; }
 
-        public Repeat Repeat { get; set; }
+        public Repetition Repeat { get; set; }
 
         public DateTime End { get; set; }
 
@@ -22,7 +22,7 @@ namespace BillTracker.Models
 
     }
 
-    public class Repeat
+    public class Repetition
     {
         public int RecurrenceNumber { get; set; }
 

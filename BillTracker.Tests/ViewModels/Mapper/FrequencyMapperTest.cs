@@ -13,7 +13,7 @@ namespace BillTracker.Tests.ViewModels.Mapper
         {
             var frequencyMapper = new FrequencyMapper();
 
-            Repeat repeat = frequencyMapper.Map(Frequency.Annual);
+            Repetition repeat = frequencyMapper.Map(Frequency.Annual);
 
             Assert.That(repeat, Is.Not.Null);
             Assert.That(repeat.RecurrenceNumber, Is.EqualTo(1));
@@ -25,7 +25,7 @@ namespace BillTracker.Tests.ViewModels.Mapper
         {
             var frequencyMapper = new FrequencyMapper();
 
-            Repeat repeat = frequencyMapper.Map(Frequency.BiAnnual);
+            Repetition repeat = frequencyMapper.Map(Frequency.BiAnnual);
 
             Assert.That(repeat, Is.Not.Null);
             Assert.That(repeat.RecurrenceNumber, Is.EqualTo(6));
@@ -37,7 +37,7 @@ namespace BillTracker.Tests.ViewModels.Mapper
         {
             var frequencyMapper = new FrequencyMapper();
 
-            Repeat repeat = frequencyMapper.Map(Frequency.Monthly);
+            Repetition repeat = frequencyMapper.Map(Frequency.Monthly);
 
             Assert.That(repeat, Is.Not.Null);
             Assert.That(repeat.RecurrenceNumber, Is.EqualTo(1));
@@ -49,11 +49,23 @@ namespace BillTracker.Tests.ViewModels.Mapper
         {
             var frequencyMapper = new FrequencyMapper();
 
-            Repeat repeat = frequencyMapper.Map(Frequency.Quarterly);
+            Repetition repeat = frequencyMapper.Map(Frequency.Quarterly);
 
             Assert.That(repeat, Is.Not.Null);
             Assert.That(repeat.RecurrenceNumber, Is.EqualTo(3));
             Assert.That(repeat.RecurrenceUnit, Is.EqualTo("Month"));
+        }
+
+        [Test]
+        public void ShouldMapOneTimePayment()
+        {
+            var frequencyMapper = new FrequencyMapper();
+
+            Repetition repeat = frequencyMapper.Map(Frequency.OneTime);
+
+            Assert.That(repeat, Is.Not.Null);
+            Assert.That(repeat.RecurrenceNumber, Is.EqualTo(0));
+            Assert.That(repeat.RecurrenceUnit, Is.EqualTo("Day"));
         }
     }
 }

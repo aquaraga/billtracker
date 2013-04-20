@@ -4,6 +4,6 @@ namespace BillTracker.ViewModels.Mapper
 {
     public interface IFrequencyMapper
     {
-        Repeat Map(Frequency frequency);
+        Repetition Map(Frequency frequency);
     }
 }
