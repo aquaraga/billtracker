@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace BillTracker.ViewModels
@@ -8,11 +9,13 @@ namespace BillTracker.ViewModels
     {
         public string Vendor { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime StartFrom { get; set; }
 
 
         public Frequency Frequency { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime End { get; set; }
 
         public decimal DueAmount { get; set; }
