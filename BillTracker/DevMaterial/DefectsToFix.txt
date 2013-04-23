@@ -1,1 +1,12 @@
 ﻿1. Give today's date as default in the Create page
+2. End date cannot be less than start date
+
+
+
+
+
+
+Features to develop:
+
+1. Facebook integration
+2. Heroku hosting

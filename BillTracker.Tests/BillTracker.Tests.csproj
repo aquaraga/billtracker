@@ -111,6 +111,7 @@
     <Compile Include="ViewModels\BillViewModelTest.cs" />
     <Compile Include="ViewModels\Mapper\BillModelMapperTest.cs" />
     <Compile Include="ViewModels\Mapper\FrequencyMapperTest.cs" />
+    <Compile Include="ViewModels\Validation\BillDateValidationAttributeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

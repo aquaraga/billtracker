@@ -67,13 +67,12 @@ namespace BillTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                 var billModel = billModelMapper.Map(billViewModel, webSecurityWrapper.GetUserId());
                 billService.SaveBill(billModel);
                 return RedirectToAction("Index");
             }
 
-            return View("");
+            return View("Create", billViewModel);
         }
 
         //

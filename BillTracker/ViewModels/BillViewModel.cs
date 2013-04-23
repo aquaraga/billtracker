@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using BillTracker.ViewModels.Validation;
 
 namespace BillTracker.ViewModels
 {
     public class BillViewModel
     {
+        [Required]
         public string Vendor { get; set; }
 
+        [Required]
         [DataType(DataType.Date)]
         public DateTime StartFrom { get; set; }
 
 
         public Frequency Frequency { get; set; }
 
+        [Required]
         [DataType(DataType.Date)]
+        [BillDateValidation]
         public DateTime End { get; set; }
 
         public decimal DueAmount { get; set; }
-
 
         public SelectList FrequencyList
         {
