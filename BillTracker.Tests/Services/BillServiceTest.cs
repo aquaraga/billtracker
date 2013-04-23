@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using BillTracker.Models;
 using BillTracker.Services;
 using NUnit.Framework;
@@ -22,6 +23,18 @@ namespace BillTracker.Tests.Services
 
             bills.AssertWasCalled(b => b.Add(billModel));
             billContext.AssertWasCalled(b => b.SaveChanges());
+        }
+
+        //TODO: Find a way to test this!
+        public void ShouldGetBillsForAUser()
+        {
+            var billContext = MockRepository.GenerateMock<IBillContext>();
+            var bills = MockRepository.GenerateMock<IDbSet<BillModel>>();
+
+            billContext.Stub(b => b.Bills).Return(bills);
+            var billService = new BillService(billContext);
+
+            IEnumerable<BillModel> billsForUser = billService.GetBillsForUser(123);
         }
     }
 }

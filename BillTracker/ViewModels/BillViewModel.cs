@@ -30,6 +30,8 @@ namespace BillTracker.ViewModels
             }
         }
 
+        public int Id { get; set; }
+
         private IEnumerable<Repeat> GetFrequencies()
         {
            return new List<Repeat>

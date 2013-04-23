@@ -1,4 +1,6 @@
-﻿using BillTracker.Models;
+﻿using System.Collections.Generic;
+using BillTracker.Models;
+using System.Linq;
 
 namespace BillTracker.Services
 {
@@ -15,6 +17,11 @@ namespace BillTracker.Services
         {
             billContext.Bills.Add(billModel);
             billContext.SaveChanges();
+        }
+
+        public IEnumerable<BillModel> GetBillsForUser(int userId)
+        {
+            return billContext.Bills.Where(b => b.UserId == userId);
         }
     }
 }

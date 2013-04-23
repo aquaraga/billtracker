@@ -1,6 +1,8 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
+using BillTracker.Filters;
 using BillTracker.Models;
 using BillTracker.Services;
 using BillTracker.ViewModels;
@@ -8,18 +10,21 @@ using BillTracker.ViewModels.Mapper;
 
 namespace BillTracker.Controllers
 {
+    [InitializeSimpleMembership]
     public class BillController : Controller
     {
         private readonly IBillModelMapper billModelMapper;
         private readonly IBillService billService;
+        private readonly IWebSecurityWrapper webSecurityWrapper;
 
 
         private readonly BillContext billContext = new BillContext();
 
-        public BillController(IBillModelMapper billModelMapper, IBillService billService)
+        public BillController(IBillModelMapper billModelMapper, IBillService billService, IWebSecurityWrapper webSecurityWrapper)
         {
             this.billModelMapper = billModelMapper;
             this.billService = billService;
+            this.webSecurityWrapper = webSecurityWrapper;
         }
 
         //
@@ -27,7 +32,10 @@ namespace BillTracker.Controllers
 
         public ActionResult Index()
         {
-            return View(billContext.Bills.ToList());
+            int userId = webSecurityWrapper.GetUserId();
+            IEnumerable<BillModel> billsForUser = billService.GetBillsForUser(userId);
+            IEnumerable<BillViewModel> billViewModels = billsForUser.Select(b => billModelMapper.Map(b));
+            return View(billViewModels.ToList());
         }
 
         //
@@ -60,7 +68,7 @@ namespace BillTracker.Controllers
             if (ModelState.IsValid)
             {
                 
-                var billModel = billModelMapper.Map(billViewModel);
+                var billModel = billModelMapper.Map(billViewModel, webSecurityWrapper.GetUserId());
                 billService.SaveBill(billModel);
                 return RedirectToAction("Index");
             }

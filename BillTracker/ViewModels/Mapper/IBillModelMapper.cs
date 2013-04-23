@@ -4,6 +4,7 @@ namespace BillTracker.ViewModels.Mapper
 {
     public interface IBillModelMapper
     {
-        BillModel Map(BillViewModel billViewModel);
+        BillModel Map(BillViewModel billViewModel, int userId);
+        BillViewModel Map(BillModel billModel);
     }
 }

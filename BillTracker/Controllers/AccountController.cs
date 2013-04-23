@@ -81,7 +81,7 @@ namespace BillTracker.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Bill");
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -335,10 +335,7 @@ namespace BillTracker.Controllers
             {
                 return Redirect(returnUrl);
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            return RedirectToAction("Index", "Bill");
         }
 
         public enum ManageMessageId

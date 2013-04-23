@@ -1,5 +1,4 @@
-﻿using BillTracker.Filters;
-using WebMatrix.WebData;
+﻿using WebMatrix.WebData;
 
 namespace BillTracker.Models
 {

@@ -4,16 +4,14 @@ namespace BillTracker.ViewModels.Mapper
 {
     public class BillModelMapper : IBillModelMapper
     {
-        private readonly IWebSecurityWrapper webSecurityWrapper;
         private readonly IFrequencyMapper frequencyMapper;
 
-        public BillModelMapper(IWebSecurityWrapper webSecurityWrapper, IFrequencyMapper frequencyMapper)
+        public BillModelMapper(IFrequencyMapper frequencyMapper)
         {
-            this.webSecurityWrapper = webSecurityWrapper;
             this.frequencyMapper = frequencyMapper;
         }
 
-        public BillModel Map(BillViewModel billViewModel)
+        public BillModel Map(BillViewModel billViewModel, int userId)
         {
             
             return new BillModel
@@ -22,8 +20,21 @@ namespace BillTracker.ViewModels.Mapper
                            End = billViewModel.End,
                            StartFrom = billViewModel.StartFrom,
                            Vendor = billViewModel.Vendor,
-                           UserId = webSecurityWrapper.GetUserId(),
+                           UserId = userId,
                            Repeat = frequencyMapper.Map(billViewModel.Frequency)
+                       };
+        }
+
+        public BillViewModel Map(BillModel billModel)
+        {
+            //TODO: Map the frequencies
+            return new BillViewModel
+                       {
+                           DueAmount = billModel.DueAmount,
+                           End = billModel.End,
+                           StartFrom = billModel.StartFrom,
+                           Id = billModel.Id,
+                           Vendor = billModel.Vendor
                        };
         }
     }

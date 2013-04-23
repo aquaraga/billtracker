@@ -10,16 +10,14 @@ namespace BillTracker.Tests.ViewModels.Mapper
     [TestFixture]
     public class BillModelMapperTest
     {
-        private IWebSecurityWrapper webSecurityWrapper;
         private IFrequencyMapper frequencyMapper;
         private BillModelMapper billModelMapper;
 
         [SetUp]
         public void Setup()
         {
-            webSecurityWrapper = MockRepository.GenerateMock<IWebSecurityWrapper>();
             frequencyMapper = MockRepository.GenerateMock<IFrequencyMapper>();
-            billModelMapper = new BillModelMapper(webSecurityWrapper, frequencyMapper);
+            billModelMapper = new BillModelMapper(frequencyMapper);
         }
 
         [Test]
@@ -39,22 +37,13 @@ namespace BillTracker.Tests.ViewModels.Mapper
                                     };
 
 
-            BillModel billModel = billModelMapper.Map(billViewModel);
+            const int userId = 123;
+            BillModel billModel = billModelMapper.Map(billViewModel, userId);
 
             Assert.That(billModel.DueAmount, Is.EqualTo(dueAmount));
             Assert.That(billModel.Vendor, Is.EqualTo(vendor));
             Assert.That(billModel.StartFrom, Is.EqualTo(startFrom));
             Assert.That(billModel.End, Is.EqualTo(endTime));
-        }
-
-        [Test]
-        public void ShouldMapUserId()
-        {
-            const int userId = 123;
-            webSecurityWrapper.Stub(w => w.GetUserId()).Return(userId);
-
-            BillModel billModel = billModelMapper.Map(new BillViewModel());
-
             Assert.That(billModel.UserId, Is.EqualTo(userId));
         }
 
@@ -65,9 +54,28 @@ namespace BillTracker.Tests.ViewModels.Mapper
             frequencyMapper.Stub(f => f.Map(Frequency.BiAnnual)).Return(repeat);
             var billViewModel = new BillViewModel {Frequency = Frequency.BiAnnual};
 
-            BillModel billModel = billModelMapper.Map(billViewModel);
+            BillModel billModel = billModelMapper.Map(billViewModel, 0);
 
             Assert.That(billModel.Repeat, Is.EqualTo(repeat));
+        }
+
+        [Test]
+        public void ShouldMapABillModelToItsViewModel()
+        {
+            var billModel = new BillModel
+                                 {
+                                     DueAmount = 25.5m, 
+                                     UserId = 123,
+                                     StartFrom = DateTime.Today,
+                                     End = DateTime.Today.AddYears(5),
+                                     Repeat = new Repetition {RecurrenceNumber = 1, RecurrenceUnit = "Year"},
+                                     ExpenseType = new ExpenseType(),
+                                     Id = 1234,
+                                     Vendor = "Airtel"
+                                 };
+            BillViewModel billViewModel = billModelMapper.Map(billModel);
+
+            Assert.That(billViewModel.DueAmount, Is.EqualTo(25.5m));
         }
     }
 
