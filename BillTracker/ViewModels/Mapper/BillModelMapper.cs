@@ -27,15 +27,23 @@ namespace BillTracker.ViewModels.Mapper
 
         public BillViewModel Map(BillModel billModel)
         {
-            //TODO: Map the frequencies
             return new BillViewModel
                        {
                            DueAmount = billModel.DueAmount,
                            End = billModel.End,
                            StartFrom = billModel.StartFrom,
                            Id = billModel.Id,
-                           Vendor = billModel.Vendor
+                           Vendor = billModel.Vendor,
+                           Frequency = frequencyMapper.Map(billModel.Repeat)
                        };
+        }
+
+        public void Extend(BillModel billModel, BillViewModel billViewModel)
+        {
+            billModel.DueAmount = billViewModel.DueAmount;
+            billModel.StartFrom = billViewModel.StartFrom;
+            billModel.End = billViewModel.End;
+            billModel.Repeat = frequencyMapper.Map(billViewModel.Frequency);
         }
     }
 }

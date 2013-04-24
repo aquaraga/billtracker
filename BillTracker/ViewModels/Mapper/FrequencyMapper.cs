@@ -16,5 +16,20 @@ namespace BillTracker.ViewModels.Mapper
                 return new Repetition { RecurrenceNumber = 1, RecurrenceUnit = "Month" };
             return new Repetition { RecurrenceNumber = 0, RecurrenceUnit = "Day"};
         }
+
+        public Frequency Map(Repetition repetition)
+        {
+            if (repetition.RecurrenceUnit.Equals("Year"))
+            {
+                return Frequency.Annual;
+            }
+            if (repetition.RecurrenceUnit.Equals("Month"))
+            {
+                return repetition.RecurrenceNumber == 6
+                           ? Frequency.BiAnnual
+                           : repetition.RecurrenceNumber == 3 ? Frequency.Quarterly : Frequency.Monthly;
+            }
+            return Frequency.OneTime;
+        }
     }
 }

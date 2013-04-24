@@ -21,6 +21,16 @@ namespace BillTracker.Tests.ViewModels.Mapper
         }
 
         [Test]
+        public void ShouldMapAnnualRepetition()
+        {
+            var frequencyMapper = new FrequencyMapper();
+
+            Frequency frequency = frequencyMapper.Map(new Repetition {RecurrenceNumber = 1, RecurrenceUnit = "Year"});
+
+            Assert.That(frequency, Is.EqualTo(Frequency.Annual));
+        }
+
+        [Test]
         public void ShouldMapBiAnnualFrequency()
         {
             var frequencyMapper = new FrequencyMapper();
@@ -30,6 +40,16 @@ namespace BillTracker.Tests.ViewModels.Mapper
             Assert.That(repeat, Is.Not.Null);
             Assert.That(repeat.RecurrenceNumber, Is.EqualTo(6));
             Assert.That(repeat.RecurrenceUnit, Is.EqualTo("Month"));
+        }
+
+        [Test]
+        public void ShouldMapBiAnnualRepetition()
+        {
+            var frequencyMapper = new FrequencyMapper();
+
+            Frequency frequency = frequencyMapper.Map(new Repetition { RecurrenceNumber = 6, RecurrenceUnit = "Month" });
+
+            Assert.That(frequency, Is.EqualTo(Frequency.BiAnnual));
         }
 
         [Test]
@@ -45,6 +65,16 @@ namespace BillTracker.Tests.ViewModels.Mapper
         }
 
         [Test]
+        public void ShouldMapMonthlyRepetition()
+        {
+            var frequencyMapper = new FrequencyMapper();
+
+            Frequency frequency = frequencyMapper.Map(new Repetition { RecurrenceNumber = 1, RecurrenceUnit = "Month" });
+
+            Assert.That(frequency, Is.EqualTo(Frequency.Monthly));
+        }
+
+        [Test]
         public void ShouldMapQuarterlyFrequency()
         {
             var frequencyMapper = new FrequencyMapper();
@@ -54,6 +84,16 @@ namespace BillTracker.Tests.ViewModels.Mapper
             Assert.That(repeat, Is.Not.Null);
             Assert.That(repeat.RecurrenceNumber, Is.EqualTo(3));
             Assert.That(repeat.RecurrenceUnit, Is.EqualTo("Month"));
+        }
+
+        [Test]
+        public void ShouldMapQuarterlyRepetition()
+        {
+            var frequencyMapper = new FrequencyMapper();
+
+            Frequency frequency = frequencyMapper.Map(new Repetition { RecurrenceNumber = 3, RecurrenceUnit = "Month" });
+
+            Assert.That(frequency, Is.EqualTo(Frequency.Quarterly));
         }
 
         [Test]
@@ -67,5 +107,16 @@ namespace BillTracker.Tests.ViewModels.Mapper
             Assert.That(repeat.RecurrenceNumber, Is.EqualTo(0));
             Assert.That(repeat.RecurrenceUnit, Is.EqualTo("Day"));
         }
+
+        [Test]
+        public void ShouldMapOneTimeRepetition()
+        {
+            var frequencyMapper = new FrequencyMapper();
+
+            Frequency frequency = frequencyMapper.Map(new Repetition { RecurrenceNumber = 0, RecurrenceUnit = "Day" });
+
+            Assert.That(frequency, Is.EqualTo(Frequency.OneTime));
+        }
+        
     }
 }

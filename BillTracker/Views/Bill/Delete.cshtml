@@ -1,4 +1,4 @@
-﻿@model BillTracker.Models.BillModel
+﻿@model BillTracker.ViewModels.BillViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -37,8 +37,15 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.DueAmount)
     </div>
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Frequency)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FrequencyDisplay)
+    </div>
 
-@*    <div class="display-label">*@
+    @*    <div class="display-label">*@
 @*         @Html.DisplayNameFor(model => model.UserId)*@
 @*    </div>*@
 @*    <div class="display-field">*@

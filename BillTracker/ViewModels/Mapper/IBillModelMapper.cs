@@ -6,5 +6,6 @@ namespace BillTracker.ViewModels.Mapper
     {
         BillModel Map(BillViewModel billViewModel, int userId);
         BillViewModel Map(BillModel billModel);
+        void Extend(BillModel billModel, BillViewModel billViewModel);
     }
 }

@@ -50,7 +50,7 @@ namespace BillTracker.Tests.ViewModels.Mapper
         [Test]
         public void ShouldInitiateFrequencyMapping()
         {
-            var repeat = new Repetition {RecurrenceNumber = 2, RecurrenceUnit = "Year"};
+            var repeat = new Repetition {RecurrenceNumber = 6, RecurrenceUnit = "Month"};
             frequencyMapper.Stub(f => f.Map(Frequency.BiAnnual)).Return(repeat);
             var billViewModel = new BillViewModel {Frequency = Frequency.BiAnnual};
 
@@ -62,13 +62,15 @@ namespace BillTracker.Tests.ViewModels.Mapper
         [Test]
         public void ShouldMapABillModelToItsViewModel()
         {
+            var repetition = new Repetition {RecurrenceNumber = 1, RecurrenceUnit = "Year"};
+            frequencyMapper.Stub(f => f.Map(repetition)).Return(Frequency.Annual);
             var billModel = new BillModel
                                  {
                                      DueAmount = 25.5m, 
                                      UserId = 123,
                                      StartFrom = DateTime.Today,
                                      End = DateTime.Today.AddYears(5),
-                                     Repeat = new Repetition {RecurrenceNumber = 1, RecurrenceUnit = "Year"},
+                                     Repeat = repetition,
                                      ExpenseType = new ExpenseType(),
                                      Id = 1234,
                                      Vendor = "Airtel"
@@ -76,6 +78,47 @@ namespace BillTracker.Tests.ViewModels.Mapper
             BillViewModel billViewModel = billModelMapper.Map(billModel);
 
             Assert.That(billViewModel.DueAmount, Is.EqualTo(25.5m));
+            Assert.That(billViewModel.Frequency, Is.EqualTo(Frequency.Annual));
+        }
+
+        [Test]
+        public void ShouldExtendAModelBasedOnUserInputs()
+        {   
+            var billModel = new BillModel
+            {
+                DueAmount = 25.5m,
+                UserId = 123,
+                StartFrom = DateTime.Today,
+                End = DateTime.Today.AddYears(5),
+                Repeat = new Repetition { RecurrenceNumber = 1, RecurrenceUnit = "Year" },
+                ExpenseType = new ExpenseType(),
+                Id = 1234,
+                Vendor = "Airtel"
+            };
+
+            const decimal newDueAmount = 50m;
+            DateTime newEndDate = DateTime.Today.AddMonths(10);
+            DateTime newStartDate = DateTime.Today.AddDays(4);
+            const Frequency newFrequency = Frequency.BiAnnual;
+            var repeat = new Repetition { RecurrenceNumber = 6, RecurrenceUnit = "Month" };
+            frequencyMapper.Stub(f => f.Map(Frequency.BiAnnual)).Return(repeat);
+            var billViewModel = new BillViewModel
+            {
+                DueAmount = newDueAmount,
+                End = newEndDate,
+                StartFrom = newStartDate,
+                Frequency = newFrequency,
+                Vendor = "SHOULD NOT CHANGE"
+            };
+
+            billModelMapper.Extend(billModel, billViewModel);
+
+            Assert.That(billModel.Vendor, Is.EqualTo("Airtel"));
+            Assert.That(billModel.DueAmount, Is.EqualTo(newDueAmount));
+            Assert.That(billModel.End, Is.EqualTo(newEndDate));
+            Assert.That(billModel.StartFrom, Is.EqualTo(newStartDate));
+            Assert.That(billModel.Repeat.RecurrenceNumber, Is.EqualTo(6));
+            Assert.That(billModel.Repeat.RecurrenceUnit, Is.EqualTo("Month"));
         }
     }
 

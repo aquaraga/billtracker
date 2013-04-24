@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BillTracker.ViewModels.BillViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Your bills";
 }
 
 <h2>Index</h2>
@@ -23,9 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.DueAmount)
         </th>
-@*        <th>*@
-@*            @Html.DisplayNameFor(model => model.UserId)*@
-@*        </th> *@
+        <th>
+            @Html.DisplayNameFor(model => model.Frequency)
+        </th> 
         <th></th>
     </tr>
 
@@ -44,9 +44,9 @@
             @Html.DisplayFor(modelItem => item.DueAmount)
         </td>
 
-@*        <td>*@
-@*            @Html.DisplayFor(modelItem => item.UserId)*@
-@*        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.FrequencyDisplay)
+        </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |

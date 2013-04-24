@@ -1,4 +1,10 @@
-﻿@model BillTracker.Models.BillModel
+﻿@model BillTracker.ViewModels.BillViewModel
+
+<script>
+    $(document).ready(function () {
+        $('.date').datepicker({ dateFormat: "dd/mm/yy" });
+    });
+</script>
 
 @{
     ViewBag.Title = "Edit";
@@ -18,15 +24,14 @@
             @Html.LabelFor(model => model.Vendor)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Vendor)
-            @Html.ValidationMessageFor(model => model.Vendor)
+            @Html.TextBoxFor(model => model.Vendor, new{ @readonly = "readonly"})
         </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.StartFrom)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.StartFrom)
+            @Html.EditorFor(model => model.StartFrom, new { @class = "date" })            
             @Html.ValidationMessageFor(model => model.StartFrom)
         </div>
 
@@ -34,8 +39,16 @@
             @Html.LabelFor(model => model.End)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.End)
+            @Html.EditorFor(model => model.End, new { @class = "date" })
             @Html.ValidationMessageFor(model => model.End)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Frequency)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Frequency, Model.FrequencyList)
+            @Html.ValidationMessageFor(model => model.Frequency)
         </div>
 
         <div class="editor-label">

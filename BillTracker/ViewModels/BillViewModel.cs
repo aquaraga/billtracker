@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using BillTracker.ViewModels.Validation;
+using System.Linq;
 
 namespace BillTracker.ViewModels
 {
@@ -37,15 +38,23 @@ namespace BillTracker.ViewModels
         public int Id { get; set; }
 
         private IEnumerable<Repeat> GetFrequencies()
+        {   
+            return new List<Repeat>
+                       {
+                           new Repeat {Frequency = Frequency.Monthly, Value = "Once a month"},
+                           new Repeat {Frequency = Frequency.Quarterly, Value = "Once in 3 months"},
+                           new Repeat {Frequency = Frequency.BiAnnual, Value = "Twice a year"},
+                           new Repeat {Frequency = Frequency.Annual, Value = "Once a year"},
+                           new Repeat {Frequency = Frequency.OneTime, Value = "One time"},
+                       };
+        }
+
+        public string FrequencyDisplay
         {
-           return new List<Repeat>
-                      {
-                    new Repeat {Frequency = Frequency.Monthly, Value = "Monthly"},
-                    new Repeat {Frequency = Frequency.Quarterly, Value = "Quarterly"},
-                    new Repeat {Frequency = Frequency.BiAnnual, Value = "BiAnnual"},
-                    new Repeat {Frequency = Frequency.Annual, Value = "Annual"},
-                    new Repeat {Frequency = Frequency.OneTime, Value = "One time"},
-                };
+            get
+            {
+                return GetFrequencies().Where(r => r.Frequency.Equals(Frequency)).Select(r => r.Value).Single();                
+            }
         }
     }
 

@@ -18,8 +18,6 @@ namespace BillTracker.Controllers
         private readonly IWebSecurityWrapper webSecurityWrapper;
 
 
-        private readonly BillContext billContext = new BillContext();
-
         public BillController(IBillModelMapper billModelMapper, IBillService billService, IWebSecurityWrapper webSecurityWrapper)
         {
             this.billModelMapper = billModelMapper;
@@ -43,12 +41,9 @@ namespace BillTracker.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            BillModel billmodel = billContext.Bills.Find(id);
-            if (billmodel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(billmodel);
+            BillModel billModel = billService.GetBill(id);
+            BillViewModel billViewModel = billModelMapper.Map(billModel);
+            return View(billViewModel);
         }
 
         //
@@ -80,40 +75,35 @@ namespace BillTracker.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            BillModel billmodel = billContext.Bills.Find(id);
-            if (billmodel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(billmodel);
+            BillModel billModel = billService.GetBill(id);
+            BillViewModel billViewModel = billModelMapper.Map(billModel);
+            return View(billViewModel);
         }
 
         //
         // POST: /Bill/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(BillModel billmodel)
+        public ActionResult Edit(BillViewModel billViewModel)
         {
             if (ModelState.IsValid)
             {
-                billContext.Entry(billmodel).State = EntityState.Modified;
-                billContext.SaveChanges();
+                BillModel billModel = billService.GetBill(billViewModel.Id);
+                billModelMapper.Extend(billModel, billViewModel);
+                billService.ModifyBill(billModel);
                 return RedirectToAction("Index");
             }
-            return View(billmodel);
+            return View(billViewModel);
         }
 
         //
         // GET: /Bill/Delete/5
 
-        public ActionResult Delete(int id = 0)
+        public ActionResult Delete(int id)
         {
-            BillModel billmodel = billContext.Bills.Find(id);
-            if (billmodel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(billmodel);
+            BillModel billModel = billService.GetBill(id);
+            BillViewModel billViewModel = billModelMapper.Map(billModel);
+            return View(billViewModel);
         }
 
         //
@@ -122,15 +112,14 @@ namespace BillTracker.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            BillModel billmodel = billContext.Bills.Find(id);
-            billContext.Bills.Remove(billmodel);
-            billContext.SaveChanges();
+            billService.DeleteBill(id);
+
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            billContext.Dispose();
+            billService.Dispose();
             base.Dispose(disposing);
         }
     }

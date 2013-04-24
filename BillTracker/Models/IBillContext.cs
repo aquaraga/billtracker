@@ -6,5 +6,7 @@ namespace BillTracker.Models
     {
         IDbSet<BillModel> Bills { get; set; }
         int SaveChanges();
+        void SetModified(object o);
+        void Dispose();
     }
 }

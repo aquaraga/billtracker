@@ -23,5 +23,28 @@ namespace BillTracker.Services
         {
             return billContext.Bills.Where(b => b.UserId == userId);
         }
+
+        public BillModel GetBill(int billId)
+        {
+            return billContext.Bills.Find(billId);
+        }
+
+        public void ModifyBill(BillModel billModel)
+        {
+            billContext.SetModified(billModel);
+            billContext.SaveChanges();
+        }
+
+        public void DeleteBill(int billId )
+        {
+            BillModel billmodel = billContext.Bills.Find(billId);
+            billContext.Bills.Remove(billmodel);
+            billContext.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            billContext.Dispose();
+        }
     }
 }

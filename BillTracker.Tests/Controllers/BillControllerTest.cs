@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
 using System.Web.Mvc;
 using BillTracker.Controllers;
 using BillTracker.Models;
@@ -45,6 +44,95 @@ namespace BillTracker.Tests.Controllers
             Assert.That(result, Is.AssignableTo<RedirectToRouteResult>());
             Assert.That(((RedirectToRouteResult) result).RouteValues["action"], Is.EqualTo("Index"));
             billService.AssertWasCalled(c => c.SaveBill(billModel));
+        }
+
+        [Test]
+        public void ShouldBeAbleToSaveABillAfterEditing()
+        {
+            var billViewModel = new BillViewModel
+            {
+                Vendor = "Airtel",
+                Id = 123
+            };
+            var billModel = new BillModel();
+
+            billService.Stub(s => s.GetBill(123)).Return(billModel);
+
+            ActionResult result = billController.Edit(billViewModel);
+
+            Assert.That(result, Is.AssignableTo<RedirectToRouteResult>());
+            Assert.That(((RedirectToRouteResult)result).RouteValues["action"], Is.EqualTo("Index"));
+            billService.AssertWasCalled(c => c.ModifyBill(billModel));
+            billModelMapper.AssertWasCalled(mapper => mapper.Extend(billModel, billViewModel));
+        }
+
+
+        [Test]
+        public void ShouldGetDetailsOfABill()
+        {
+            var billViewModel = new BillViewModel
+            {
+                Vendor = "Airtel"
+            };
+            var billModel = new BillModel();
+
+            const int billId = 10;
+            billService.Stub(s => s.GetBill(billId)).Return(billModel);
+            billModelMapper.Stub(mapper => mapper.Map(billModel)).Return(billViewModel);
+
+            ActionResult actionResult = billController.Details(billId);
+
+            Assert.That(actionResult, Is.AssignableTo<ViewResult>());
+            Assert.That(((ViewResult)actionResult).Model, Is.EqualTo(billViewModel));
+        }
+
+        [Test]
+        public void ShouldGetDetailsOfABillInEditMode()
+        {
+            var billViewModel = new BillViewModel
+            {
+                Vendor = "Airtel"
+            };
+            var billModel = new BillModel();
+
+            const int billId = 10;
+            billService.Stub(s => s.GetBill(billId)).Return(billModel);
+            billModelMapper.Stub(mapper => mapper.Map(billModel)).Return(billViewModel);
+
+            ActionResult actionResult = billController.Edit(billId);
+
+            Assert.That(actionResult, Is.AssignableTo<ViewResult>());
+            Assert.That(((ViewResult)actionResult).Model, Is.EqualTo(billViewModel));
+        }
+
+        [Test] 
+        public void ShouldGetDetailsOfABillPriorToDeletion()
+        {
+            var billViewModel = new BillViewModel
+            {
+                Vendor = "Airtel"
+            };
+            var billModel = new BillModel();
+
+            const int billId = 10;
+            billService.Stub(s => s.GetBill(billId)).Return(billModel);
+            billModelMapper.Stub(mapper => mapper.Map(billModel)).Return(billViewModel);
+
+            ActionResult actionResult = billController.Delete(billId);
+
+            Assert.That(actionResult, Is.AssignableTo<ViewResult>());
+            Assert.That(((ViewResult)actionResult).Model, Is.EqualTo(billViewModel));
+        }
+
+
+        [Test]
+        public void ShouldDeleteABill()
+        {
+            ActionResult result = billController.DeleteConfirmed(123);
+
+            Assert.That(result, Is.AssignableTo<RedirectToRouteResult>());
+            Assert.That(((RedirectToRouteResult)result).RouteValues["action"], Is.EqualTo("Index"));
+            billService.AssertWasCalled(c => c.DeleteBill(123));
         }
 
         [Test]
