@@ -14,14 +14,16 @@ namespace BillTracker.ViewModels
 
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartFrom { get; set; }
 
 
         public Frequency Frequency { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
         [BillDateValidation]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime End { get; set; }
 
         public decimal DueAmount { get; set; }

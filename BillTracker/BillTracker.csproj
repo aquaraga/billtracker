@@ -262,6 +262,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Content\fullcalendar.css" />
+    <Content Include="Scripts\billTrackerDate.js" />
+    <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -321,6 +324,7 @@
     <Content Include="Views\Bill\Create.cshtml" />
     <Content Include="Views\Bill\Edit.cshtml" />
     <Content Include="Views\Bill\Delete.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

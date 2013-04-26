@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Data;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using BillTracker.Filters;
@@ -51,7 +51,11 @@ namespace BillTracker.Controllers
 
         public ActionResult Create()
         {
-            return View(new BillViewModel());
+            return View(new BillViewModel
+                            {
+                                StartFrom = DateTime.Now,
+                                End = DateTime.Now.AddYears(1)
+                            });
         }
 
         //

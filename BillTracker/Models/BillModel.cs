@@ -12,6 +12,7 @@ namespace BillTracker.Models
 
         public Repetition Repeat { get; set; }
 
+        
         public DateTime End { get; set; }
 
         public decimal DueAmount { get; set; }

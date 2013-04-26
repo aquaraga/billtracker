@@ -1,11 +1,5 @@
 ﻿@model BillTracker.ViewModels.BillViewModel
 
-<script>
-    $(document).ready(function () {
-        $('.date').datepicker({ dateFormat: "dd/mm/yy" });
-    });
-</script>
-
 @{
     ViewBag.Title = "Edit";
 }
@@ -31,7 +25,7 @@
             @Html.LabelFor(model => model.StartFrom)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.StartFrom, new { @class = "date" })            
+            @Html.EditorFor(model => model.StartFrom)            
             @Html.ValidationMessageFor(model => model.StartFrom)
         </div>
 
@@ -39,7 +33,7 @@
             @Html.LabelFor(model => model.End)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.End, new { @class = "date" })
+            @Html.EditorFor(model => model.End)
             @Html.ValidationMessageFor(model => model.End)
         </div>
         
@@ -80,4 +74,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/billTypes")
 }
