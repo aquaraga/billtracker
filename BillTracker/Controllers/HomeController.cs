@@ -9,10 +9,10 @@ namespace BillTracker.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+//            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            if (WebSecurity.IsAuthenticated)
-                return RedirectToAction("Index", "Bill");
+//            if (WebSecurity.IsAuthenticated)
+//                return RedirectToAction("Index", "Bill");
 
             return View();
         }

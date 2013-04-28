@@ -18,7 +18,7 @@ namespace BillTracker
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/fullcalendar").Include(
-                        "~/Scripts/fullcalendar.js"));
+                        "~/Scripts/fullcalendar.js", "~/Scripts/paymentCalendar.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/billTypes").Include(
                         "~/Scripts/billTrackerDate.js"));

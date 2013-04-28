@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
@@ -81,7 +80,7 @@ namespace BillTracker.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Bill");
+                    return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -335,7 +334,7 @@ namespace BillTracker.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Bill");
+            return RedirectToAction("Index", "Home");
         }
 
         public enum ManageMessageId
