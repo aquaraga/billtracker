@@ -31,7 +31,9 @@ namespace BillTracker
                 .RegisterType<IBillModelMapper, BillModelMapper>()
                 .RegisterType<IBillService, BillService>()
                 .RegisterType<IWebSecurityWrapper, WebSecurityWrapper>()
-                .RegisterType<IFrequencyMapper, FrequencyMapper>();
+                .RegisterType<IFrequencyMapper, FrequencyMapper>()
+                .RegisterType<IPaymentScheduleService, PaymentScheduleService>()
+                .RegisterType<IEventSummaryMapper, EventSummaryMapper>();
 
             RegisterTypes(container);
 

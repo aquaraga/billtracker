@@ -3,6 +3,7 @@
         weekends: false,
         dayClick: function () {
             alert('a day has been clicked!');
-        }
+        },
+        events: '/PaymentSchedule/EventSummary'
     });
 });
