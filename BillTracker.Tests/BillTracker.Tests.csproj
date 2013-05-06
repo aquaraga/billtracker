@@ -106,6 +106,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BillControllerTest.cs" />
     <Compile Include="Controllers\PaymentScheduleControllerTest.cs" />
+    <Compile Include="Helpers\InMemoryDbSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Services\BillServiceTest.cs" />
