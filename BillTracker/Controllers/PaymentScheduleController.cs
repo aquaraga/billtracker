@@ -28,8 +28,8 @@ namespace BillTracker.Controllers
             var summaryOfDues = paymentScheduleService.GetSummaryOfDues(
                 new ScheduleRequest
                     {
-                        StartDate = new DateTime(Convert.ToInt64(start)),
-                        EndDate = new DateTime(Convert.ToInt64(end)), 
+                        Year = new DateTime(Convert.ToInt64(start)).Year,
+                        Month = new DateTime(Convert.ToInt64(start)).Month, 
                         UserId = userId
                     });
 

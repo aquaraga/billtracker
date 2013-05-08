@@ -9,5 +9,9 @@ namespace BillTracker.Models
         public DateTime EndDate { get; set; }
 
         public int UserId { get; set; }
+
+        public int Year { get; set; }
+
+        public int Month { get; set; }
     }
 }

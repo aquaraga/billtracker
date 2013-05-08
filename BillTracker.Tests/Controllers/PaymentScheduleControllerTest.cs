@@ -31,7 +31,7 @@ namespace BillTracker.Tests.Controllers
             webSecurityWrapper.Stub(w => w.GetUserId()).Return(1234);
             paymentScheduleService.Stub(
                 pss => pss.GetSummaryOfDues(Arg<ScheduleRequest>.Matches(
-                    sr => sr.StartDate.Equals(startDate) && sr.EndDate.Equals(endDate)
+                    sr => sr.Year.Equals(2013) && sr.Month.Equals(4)
                     && sr.UserId == 1234)))
                 .Return(scheduleSummary);
             eventSummaryMapper.Stub(es => es.Map(scheduleSummary)).Return(eventSummaryJsons);

@@ -15,7 +15,13 @@ namespace BillTracker.Services
         public ScheduleSummary GetSummaryOfDues(ScheduleRequest schedule)
         {
             var billModels = billContext.Bills.Where(b => b.UserId == schedule.UserId).ToList();
-            return new ScheduleSummary {Bills = billModels};
+            
+            
+            var yearlyBills = billModels
+                .Where(m => "Year".Equals(m.Repeat.RecurrenceUnit) && m.StartFrom.Month == schedule.Month)
+                .ToList();
+
+            return new ScheduleSummary {Bills = yearlyBills};
         }
     }
 }
