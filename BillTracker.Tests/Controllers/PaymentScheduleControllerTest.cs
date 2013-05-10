@@ -31,17 +31,27 @@ namespace BillTracker.Tests.Controllers
             webSecurityWrapper.Stub(w => w.GetUserId()).Return(1234);
             paymentScheduleService.Stub(
                 pss => pss.GetSummaryOfDues(Arg<ScheduleRequest>.Matches(
-                    sr => sr.Year.Equals(2013) && sr.Month.Equals(4)
+                    sr => sr.StartDate.Equals(startDate)
                     && sr.UserId == 1234)))
                 .Return(scheduleSummary);
             eventSummaryMapper.Stub(es => es.Map(scheduleSummary)).Return(eventSummaryJsons);
 
 
-            var eventSummary = paymentScheduleController.EventSummary(startDate.Ticks.ToString(), endDate.Ticks.ToString());
+            var eventSummary = paymentScheduleController.EventSummary(ConvertToTimestamp(startDate).ToString(), ConvertToTimestamp(endDate).ToString());
 
             Assert.That(eventSummary, Is.AssignableTo<JsonResult>());
             Assert.That(((JsonResult)eventSummary).Data, Is.EqualTo(eventSummaryJsons));
 
+        }
+
+        private double ConvertToTimestamp(DateTime value)
+        {
+            //create Timespan by subtracting the value provided from
+            //the Unix Epoch
+            TimeSpan span = (value - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime());
+
+            //return the total seconds (which is a UNIX timestamp)
+            return span.TotalSeconds;
         }
     }
 }

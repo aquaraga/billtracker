@@ -6,22 +6,20 @@ namespace BillTracker.Services
     public class PaymentScheduleService : IPaymentScheduleService
     {
         private readonly IBillContext billContext;
+        private readonly IScheduleFilters scheduleFilters;
 
-        public PaymentScheduleService(IBillContext billContext)
+        public PaymentScheduleService(IBillContext billContext, IScheduleFilters scheduleFilters)
         {
             this.billContext = billContext;
+            this.scheduleFilters = scheduleFilters;
         }
 
         public ScheduleSummary GetSummaryOfDues(ScheduleRequest schedule)
         {
-            var billModels = billContext.Bills.Where(b => b.UserId == schedule.UserId).ToList();
-            
-            
-            var yearlyBills = billModels
-                .Where(m => "Year".Equals(m.Repeat.RecurrenceUnit) && m.StartFrom.Month == schedule.Month)
-                .ToList();
+            var billModels = billContext.Bills.Where(b => b.UserId == schedule.UserId);
 
-            return new ScheduleSummary {Bills = yearlyBills};
+            var filteredBills = scheduleFilters.Filter(billModels, schedule).ToList();
+            return new ScheduleSummary {Bills = filteredBills};
         }
     }
 }

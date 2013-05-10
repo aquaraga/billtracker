@@ -188,10 +188,14 @@
     <Compile Include="Models\IWebSecurityWrapper.cs" />
     <Compile Include="Models\ScheduleRequest.cs" />
     <Compile Include="Models\ScheduleSummary.cs" />
+    <Compile Include="Services\AnnualBillFilter.cs" />
     <Compile Include="Services\BillService.cs" />
     <Compile Include="Services\IBillService.cs" />
     <Compile Include="Services\IPaymentScheduleService.cs" />
+    <Compile Include="Services\IScheduleFilter.cs" />
+    <Compile Include="Services\IScheduleFilters.cs" />
     <Compile Include="Services\PaymentScheduleService.cs" />
+    <Compile Include="Services\ScheduleFilters.cs" />
     <Compile Include="ViewModels\EventSummaryJson.cs" />
     <Compile Include="ViewModels\Mapper\EventSummaryMapper.cs" />
     <Compile Include="ViewModels\Mapper\IEventSummaryMapper.cs" />

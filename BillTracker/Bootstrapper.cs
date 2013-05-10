@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Web.Mvc;
 using BillTracker.Models;
 using BillTracker.Services;
@@ -33,11 +34,20 @@ namespace BillTracker
                 .RegisterType<IWebSecurityWrapper, WebSecurityWrapper>()
                 .RegisterType<IFrequencyMapper, FrequencyMapper>()
                 .RegisterType<IPaymentScheduleService, PaymentScheduleService>()
-                .RegisterType<IEventSummaryMapper, EventSummaryMapper>();
+                .RegisterType<IEventSummaryMapper, EventSummaryMapper>()
+                .RegisterType<IScheduleFilters>(new InjectionFactory(c => CreateFilters()));
 
             RegisterTypes(container);
 
             return container;
+        }
+
+        private static IScheduleFilters CreateFilters()
+        {
+            return new ScheduleFilters(new List<IScheduleFilter>
+                                           {
+                                               new AnnualBillFilter()
+                                           });
         }
 
         public static void RegisterTypes(IUnityContainer container)

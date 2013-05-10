@@ -19,18 +19,28 @@ namespace BillTracker.Controllers
             this.webSecurityWrapper = webSecurityWrapper;
         }
 
+        private static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+
         //
         // GET: /PaymentSchedule/EventSummary
 
         public ActionResult EventSummary(string start, string end)
         {
             var userId = webSecurityWrapper.GetUserId();
+            var startDate = UnixTimeStampToDateTime(Convert.ToDouble(start));
+            var endDate = UnixTimeStampToDateTime(Convert.ToDouble(end));
             var summaryOfDues = paymentScheduleService.GetSummaryOfDues(
                 new ScheduleRequest
                     {
-                        Year = new DateTime(Convert.ToInt64(start)).Year,
-                        Month = new DateTime(Convert.ToInt64(start)).Month, 
-                        UserId = userId
+                        UserId = userId,
+                        StartDate = startDate,
+                        EndDate = endDate
                     });
 
             var eventSummaryJsons = eventSummaryMapper.Map(summaryOfDues);
